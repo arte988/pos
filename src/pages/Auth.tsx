@@ -8,6 +8,7 @@ const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [empresaName, setEmpresaName] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -19,9 +20,22 @@ const Auth = () => {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
       } else {
-        const { error } = await supabase.auth.signUp({ email, password });
+        const { data, error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
-        toast({ title: "Cuenta creada", description: "Revisa tu correo para confirmar." });
+
+        if (data?.user) {
+          const { error: rpcError } = await supabase.rpc('handle_new_user_signup', {
+            p_user_id: data.user.id,
+            p_nombre_empresa: empresaName
+          });
+
+          if (rpcError) {
+            console.error("Error creating tenant:", rpcError);
+            throw new Error("Error al crear la empresa. Contacta a soporte.");
+          }
+        }
+
+        toast({ title: "Cuenta creada", description: "Iniciando sesión..." });
       }
     } catch (error: any) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
@@ -49,6 +63,16 @@ const Auth = () => {
             required
             className="touch-target"
           />
+          {!isLogin && (
+            <Input
+              type="text"
+              placeholder="Nombre de la Pupusería"
+              value={empresaName}
+              onChange={(e) => setEmpresaName(e.target.value)}
+              required
+              className="touch-target"
+            />
+          )}
           <Input
             type="password"
             placeholder="Contraseña"

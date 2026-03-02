@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { DollarSign, ShoppingCart, TrendingUp, Lock } from "lucide-react";
+import { DollarSign, ShoppingCart, TrendingUp, Lock, Users } from "lucide-react";
 import AppLayout from "@/components/AppLayout";
 
 const Reports = () => {
   const [todayOrders, setTodayOrders] = useState<any[]>([]);
+  const [waiters, setWaiters] = useState<any[]>([]);
   const [closings, setClosings] = useState<any[]>([]);
   const [closing, setClosing] = useState(false);
   const { toast } = useToast();
@@ -18,12 +19,14 @@ const Reports = () => {
   }, []);
 
   const loadData = async () => {
-    const [ordersRes, closingsRes] = await Promise.all([
+    const [ordersRes, closingsRes, waitersRes] = await Promise.all([
       supabase.from("orders").select("*").gte("created_at", today).neq("status", "cancelada"),
       supabase.from("cash_closings").select("*").order("created_at", { ascending: false }).limit(7),
+      supabase.from("waiters" as any).select("*"),
     ]);
     if (ordersRes.data) setTodayOrders(ordersRes.data);
     if (closingsRes.data) setClosings(closingsRes.data);
+    if (waitersRes.data) setWaiters(waitersRes.data);
   };
 
   const totalSales = todayOrders.reduce((sum, o) => sum + Number(o.total), 0);
@@ -55,6 +58,13 @@ const Reports = () => {
     { label: "Despachadas", value: dispatched, icon: TrendingUp, color: "bg-primary/10 text-primary" },
   ];
 
+  // Calculate tips per waiter
+  const waiterTips = waiters.map(w => {
+    const ordersForWaiter = todayOrders.filter(o => o.waiter_id === w.id);
+    const totalTips = ordersForWaiter.reduce((sum, o) => sum + Number(o.tip_amount || 0), 0);
+    return { ...w, totalTips };
+  }).filter(w => w.totalTips > 0);
+
   return (
     <AppLayout>
       <div className="space-y-4">
@@ -72,10 +82,30 @@ const Reports = () => {
           ))}
         </div>
 
-        <Button onClick={doCashClosing} disabled={closing} className="w-full touch-target gap-2" variant="default">
-          <Lock size={16} />
-          {closing ? "Cerrando..." : "Cierre de Caja"}
-        </Button>
+        {/* Waiter Tips Section */}
+        {waiterTips.length > 0 && (
+          <div className="space-y-3 mt-6">
+            <h3 className="text-lg font-bold flex items-center gap-2">
+              <Users size={20} className="text-muted-foreground" />
+              Propinas por Mesero (Hoy)
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {waiterTips.map((w) => (
+                <div key={w.id} className="rounded-xl border bg-card p-4 shadow-sm flex flex-col items-center justify-center text-center">
+                  <h4 className="font-bold truncate w-full" title={w.name}>{w.name}</h4>
+                  <p className="text-xl font-black text-primary mt-1">${w.totalTips.toFixed(2)}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="pt-4 border-t">
+          <Button onClick={doCashClosing} disabled={closing} className="w-full touch-target gap-2" variant="default">
+            <Lock size={16} />
+            {closing ? "Cerrando..." : "Cierre de Caja"}
+          </Button>
+        </div>
 
         {closings.length > 0 && (
           <div className="space-y-2">
