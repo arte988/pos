@@ -33,7 +33,7 @@ const AuthAdmin = () => {
                         🛡️
                     </div>
                     <h1 className="text-3xl font-bold">Admin Portal</h1>
-                    <p className="mt-1 text-sm text-slate-400">PupuPOS Cloud Management</p>
+                    <p className="mt-1 text-sm text-slate-400">easypos Cloud Management</p>
                 </div>
                 <form onSubmit={handleAuth} className="space-y-4 bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-2xl">
                     <Input

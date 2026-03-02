@@ -16,7 +16,7 @@ const LicenseBlocker = ({ onLicenseActivated }: LicenseBlockerProps) => {
 
     // Tu número de WhatsApp incluyendo el código de país (ej: 503 para El Salvador)
     const whatsappNumber = "50370000000"; // PLEASE UPDATE THIS
-    const whatsappMsg = "Hola, necesito renovar mi membresía de PupuPOS de $25.";
+    const whatsappMsg = "Hola, necesito renovar mi membresía de easypos de $25.";
 
     const handleActivate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -65,7 +65,7 @@ const LicenseBlocker = ({ onLicenseActivated }: LicenseBlockerProps) => {
                         🔒
                     </div>
                     <h1 className="text-2xl font-bold text-foreground">Membresía Requerida</h1>
-                    <p className="mt-2 text-muted-foreground">Tu licencia de PupuPOS ha expirado o no está activa.</p>
+                    <p className="mt-2 text-muted-foreground">Tu licencia de easypos ha expirado o no está activa.</p>
                 </div>
 
                 {/* Content */}

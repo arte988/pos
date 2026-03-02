@@ -100,7 +100,7 @@ const Dashboard = () => {
                         </div>
                         <div>
                             <h1 className="text-xl font-bold text-slate-800">CPanel Licencias</h1>
-                            <p className="text-sm text-slate-500">Administración de PupuPOS</p>
+                            <p className="text-sm text-slate-500">Administración de easypos</p>
                         </div>
                     </div>
                     <Button variant="ghost" onClick={handleLogout} className="text-slate-600 hover:text-red-600">

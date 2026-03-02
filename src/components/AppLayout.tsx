@@ -59,7 +59,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-lg font-bold text-foreground leading-tight">
-                {empresaName || "PupuPOS"}
+                {empresaName || "easypos"}
               </h1>
               {diasRestantes !== null && (
                 <div className={`flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-md ${isLicenciaPorExpirar ? 'bg-destructive/10 text-destructive' : 'bg-primary/10 text-primary'}`}>

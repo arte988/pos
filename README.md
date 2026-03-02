@@ -1,6 +1,6 @@
-# Pupusa Perfect
+# easypos
 
-Welcome to the Pupusa Perfect project.
+Welcome to the easypos project.
 
 ## Technologies Used
 
