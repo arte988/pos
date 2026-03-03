@@ -24,7 +24,7 @@ const ProtectedRoutes = () => {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
-          <span className="text-4xl">🫓</span>
+          <span className="text-4xl">🍽️</span>
           <p className="mt-2 text-sm text-muted-foreground animate-pulse-soft">Cargando...</p>
         </div>
       </div>

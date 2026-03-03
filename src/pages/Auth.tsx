@@ -49,10 +49,10 @@ const Auth = () => {
       <div className="w-full max-w-sm animate-slide-up">
         <div className="mb-8 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-3xl">
-            🫓
+            🍽️
           </div>
           <h1 className="text-3xl font-bold text-foreground">easypos</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Sistema de pupusería</p>
+          <p className="mt-1 text-sm text-muted-foreground">Sistema para restaurantes</p>
         </div>
         <form onSubmit={handleAuth} className="space-y-4">
           <Input
