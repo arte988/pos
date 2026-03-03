@@ -71,7 +71,7 @@ const POS = () => {
   };
 
   const loadData = async (empId: string) => {
-    const [b, t, m, pt, mi, p, c, sc, w, rs] = await Promise.all([
+    const [b, t, m, pt, mi, p, c, sc, w, rs, pm] = await Promise.all([
       supabase.from("branches").select("*").eq("empresa_id", empId),
       supabase.from("tables").select("*").eq("empresa_id", empId),
       supabase.from("masa_types").select("*"),

@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Trash2, Store, Table as TableIcon, Utensils, Settings, Coffee, List, Tags, UserCircle, Edit2, X } from "lucide-react";
+import { Plus, Trash2, Store, Table as TableIcon, Utensils, Settings, Coffee, List, Tags, UserCircle, Edit2, X, CreditCard } from "lucide-react";
 import AppLayout from "@/components/AppLayout";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -38,6 +38,8 @@ const Config = () => {
 
   // Form states
   const [newBranch, setNewBranch] = useState({ name: "", address: "", phone: "" });
+  const [newTable, setNewTable] = useState({ name: "", branch_id: "" });
+  const [newCategory, setNewCategory] = useState("");
   const [newSubcategory, setNewSubcategory] = useState({ name: "", category_id: "" });
   const [newMasa, setNewMasa] = useState("");
   const [newPupusa, setNewPupusa] = useState({ name: "", price: 0, ...defaultAvailability });
